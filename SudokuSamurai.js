@@ -1,3 +1,27 @@
+class Cambio {
+    constructor(numero, x, y, asumir, funcion) {
+        this.numero = numero;       // Numero
+        this.x = x;                 // Coordenadas
+        this.y = y;                 // Coordenadas
+        this.fueAsumido = asumir;   // Fue asumido?
+        this.funcion = funcion      // Fue agregado o borrado?
+    }
+}
+
+class Memoria {
+    constructor() {
+        this.listaCambios = [];
+    }
+
+    guardarCambio(numero, x, y, asumir, funcion) {
+        this.listaCambios.push(new Cambio(numero, x, y, asumir, funcion));
+    }
+
+    deshacerCambios() {
+
+    }
+}
+
 class Casilla {
     constructor() {
         this.numero = 0;            // 0 = Vacio | {1-9} = Valores Aceptables
@@ -34,7 +58,8 @@ class Casilla {
 class Sudoku {
     constructor() {
         this.juego = Array.from({ length: 21 }, () => Array.from({ length:  21 }, () => new Casilla()));   // Matriz 9*9 de Casillas con 0
-        this.casillasVacias = 441;  
+        this.casillasVacias = 441;
+        this.memoria = new Memoria();  
     } 
 
     getPosibilidadesCasilla(x, y, zona) {
@@ -112,6 +137,10 @@ class Sudoku {
         }
     }
 
+    devolverCambios() {
+
+    }
+
     solucionAEstrella() {
         let lvlAsumir = 1;              // Encuentra las casillas que solo tienen <lvlAsumir> posibilidades
 
@@ -142,18 +171,19 @@ class Sudoku {
                             if (asumible) {
                                 asumioCN = false;
                             }
+                            const asumio = (len !== 0);
 
                             // Eleccion aleatoria entre las posibilidades
                             const seleccion = Math.floor(Math.random() * len);
 
                             // Guardar movimiento // Aca usa el len para saber si supuso o solo habia una posibilidad
-                            // Aun por definir
+                            this.memoria.guardarCambio(this.juego[realRow][realCol].numero, realCol, realRow, asumio, "Agregar");
 
                             // Poner numero
                             this.juego[row][col].setNumero(validNums[seleccion]);
                         }
                         if (len === 0) {
-                            // Llamar backtracking
+                            this.devolverCambios();
                             continue;
                         }
                         if (len < menorEncontrado) {
@@ -173,18 +203,19 @@ class Sudoku {
                             if (asumible) {
                                 asumioCN = false;
                             }
+                            const asumio = (len !== 0);
 
                             // Eleccion aleatoria entre las posibilidades
                             const seleccion = Math.floor(Math.random() * len);
 
                             // Guardar movimiento // Aca usa el len para saber si supuso o solo habia una posibilidad
-                            // Aun por definir
+                            this.memoria.guardarCambio(this.juego[realRow][realCol].numero, realCol, realRow, asumio, "Agregar");
 
                             // Poner numero
                             this.juego[row][col].setNumero(validNums[seleccion]);
                         }
                         if (len === 0) {
-                            // Llamar backtracking
+                            this.devolverCambios();
                             continue;
                         }
                         if (len < menorEncontrado) {
@@ -204,18 +235,19 @@ class Sudoku {
                             if (asumible) {
                                 asumioCN = false;
                             }
+                            const asumio = (len !== 0);
 
                             // Eleccion aleatoria entre las posibilidades
                             const seleccion = Math.floor(Math.random() * len);
 
                             // Guardar movimiento // Aca usa el len para saber si supuso o solo habia una posibilidad
-                            // Aun por definir
+                            this.memoria.guardarCambio(this.juego[realRow][realCol].numero, realCol, realRow, asumio, "Agregar");
 
                             // Poner numero
                             this.juego[row][col].setNumero(validNums[seleccion]);
                         }
                         if (len === 0) {
-                            // Llamar backtracking
+                            this.devolverCambios();
                             continue;
                         }
                         if (len < menorEncontrado) {
@@ -235,18 +267,19 @@ class Sudoku {
                             if (asumible) {
                                 asumioCN = false;
                             }
+                            const asumio = (len !== 0);
 
                             // Eleccion aleatoria entre las posibilidades
                             const seleccion = Math.floor(Math.random() * len);
 
                             // Guardar movimiento // Aca usa el len para saber si supuso o solo habia una posibilidad
-                            // Aun por definir
+                            this.memoria.guardarCambio(this.juego[realRow][realCol].numero, realCol, realRow, asumio, "Agregar");
 
                             // Poner numero
                             this.juego[row][col].setNumero(validNums[seleccion]);
                         }
                         if (len === 0) {
-                            // Llamar backtracking
+                            this.devolverCambios();
                             continue;
                         }
                         if (len < menorEncontrado) {
@@ -266,18 +299,19 @@ class Sudoku {
                             if (asumible) {
                                 asumioCN = false;
                             }
+                            const asumio = (len !== 0);
 
                             // Eleccion aleatoria entre las posibilidades
                             const seleccion = Math.floor(Math.random() * len);
 
                             // Guardar movimiento // Aca usa el len para saber si supuso o solo habia una posibilidad
-                            // Aun por definir
+                            this.memoria.guardarCambio(this.juego[realRow][realCol].numero, realCol, realRow, asumio, "Agregar");
 
                             // Poner numero
                             this.juego[row][col].setNumero(validNums[seleccion]);
                         }
                         if (len === 0) {
-                            // Llamar backtracking
+                            this.devolverCambios();
                             continue;
                         }
                         if (len < menorEncontrado) {
